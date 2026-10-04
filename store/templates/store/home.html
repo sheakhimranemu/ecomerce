@@ -1,118 +1,97 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Kutir | Smart Shopping, Smart Life</title>
+    <title>Tech Kutir - Smart Shopping, Smart Life</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-primary: #f4f9ff;
-            --bg-secondary: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --accent-blue: #00a8ff;
-            --accent-glow: transparent;
-            --border-color: #e2e8f0;
-        }
-        [data-theme="dark"] {
-            --bg-primary: #0a0f1d;
-            --bg-secondary: #131b2e;
-            --text-primary: #ffffff;
-            --text-secondary: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-glow: 0 0 12px rgba(56, 189, 248, 0.6);
-            --border-color: #1e293b;
-        }
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar-custom {
-            background-color: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .highlight-text {
-            color: var(--accent-blue) !important;
-            text-shadow: var(--accent-glow);
-            font-weight: 700;
-        }
-        .hero-section {
-            padding: 80px 20px;
-            text-align: center;
-        }
-        .badge-offer {
-            background-color: #ff5722;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        footer {
-            background-color: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 20px 0;
-            margin-top: 50px;
-        }
+        body { background-color: #f4f9ff; color: #0f172a; font-family: 'Segoe UI', sans-serif; }
+        .product-card { transition: transform 0.2s, shadow 0.2s; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: #fff; text-decoration: none; color: inherit; display: block; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+        .product-img { height: 200px; object-fit: contain; width: 100%; padding: 15px; background: #fff; }
+        .category-chip { display: inline-block; padding: 6px 16px; border-radius: 20px; background: #e2e8f0; color: #334155; text-decoration: none; margin-right: 8px; font-weight: 500; }
+        .category-chip.active { background: #0d6efd; color: #fff; }
     </style>
 </head>
 <body>
 
-    <!-- Top Info Bar -->
-    <div class="py-2 text-center text-white" style="background-color: #00a8ff;">
-        <small><i class="fas fa-phone-alt"></i> +8801787-808006 &nbsp;|&nbsp; <i class="fab fa-whatsapp"></i> WhatsApp Support</small>
-    </div>
-
-    <!-- Main Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-custom py-3">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand fw-bold text-center mx-auto" href="#">
-                <h3 class="m-0 highlight-text"><i class="fas fa-microchip"></i> Tech Kutir</h3>
-                <small class="text-muted fs-6">Smart Shopping, Smart Life</small>
-            </a>
-            <button class="btn btn-outline-info rounded-circle ms-2" id="theme-toggle" onclick="toggleTheme()">
-                <i id="theme-icon" class="fas fa-moon"></i>
-            </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="/"><i class="fas fa-microchip"></i> Tech Kutir</a>
+            <span class="text-muted small">Smart Shopping, Smart Life</span>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="container hero-section">
-        <span class="badge badge-offer mb-3"><i class="fas fa-fire"></i> Best Deals For You - 50% OFF</span>
-        <h1 class="display-4 fw-bold mt-2">Everything You Need, <br><span class="highlight-text">All In One Place.</span></h1>
-        <p class="lead text-secondary mt-3">Discover premium gadgets, electronics, gaming accessories, home essentials and quality products.</p>
-        <div class="mt-4">
-            <button class="btn btn-info text-white btn-lg me-2 px-4">Shop Now</button>
-            <button class="btn btn-outline-info btn-lg px-4">View Collection</button>
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-2"><i class="fas fa-fire"></i> Best Deals For You - 50% OFF</span>
+            <h1 class="fw-bold display-5">Everything You Need, <br><span class="text-primary">All In One Place.</span></h1>
+            <p class="text-secondary">Discover premium gadgets, electronics, gaming accessories, home essentials and quality products.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8 col-lg-6">
+                <form method="GET" action="/" class="d-flex gap-2">
+                    <input type="text" name="q" class="form-control form-control-lg" placeholder="Search products..." value="{{ query|default:'' }}">
+                    <button type="submit" class="btn btn-primary btn-lg px-4"><i class="fas fa-search"></i></button>
+                    {% if query or selected_category %}
+                        <a href="/" class="btn btn-outline-secondary btn-lg"><i class="fas fa-undo"></i></a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="text-center mb-4 overflow-auto pb-2">
+            <a href="/" class="category-chip {% if not selected_category %}active{% endif %}">All Products</a>
+            {% for cat in categories %}
+                <a href="/?category={{ cat.slug }}" class="category-chip {% if selected_category == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+
+        <h3 class="fw-bold border-start border-4 border-primary ps-3 mb-4">
+            {% if query %} Search Results for "{{ query }}" {% elif selected_category %} Category Products {% else %} Featured Products {% endif %}
+        </h3>
+
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{% url 'product_detail' product.pk %}" class="product-card h-100 p-3 d-flex flex-column justify-content-between">
+                    <div>
+                        <img src="{{ product.image_url }}" class="product-img" alt="{{ product.title }}">
+                        <span class="badge bg-secondary mb-2">{{ product.category.name }}</span>
+                        <h5 class="fw-semibold fs-6 text-truncate mb-2">{{ product.title }}</h5>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <span class="fs-5 fw-bold text-primary">৳{{ product.price }}</span>
+                                {% if product.discount_price %}
+                                    <small class="text-muted text-decoration-line-through d-block">৳{{ product.discount_price }}</small>
+                                {% endif %}
+                            </div>
+                            <span class="btn btn-outline-primary btn-sm rounded-circle"><i class="fas fa-shopping-cart"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-5">No products found!</p>
+                <a href="/" class="btn btn-outline-primary mt-2">View All Products</a>
+            </div>
+            {% endfor %}
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="container">
-            <p class="mb-1">&copy; 2026 <strong>Tech Kutir</strong>. All Rights Reserved.</p>
-            <p class="mb-0 text-secondary">
-                Designed & Developed by <a href="#" class="highlight-text text-decoration-none">Sheakh Imran</a>
-            </p>
-        </div>
+    <footer class="text-center py-4 bg-white border-top mt-5">
+        <p class="mb-0 text-muted">&copy; 2026 <strong>Tech Kutir</strong>. All Rights Reserved.</p>
+        <small class="text-muted">Designed & Developed by <a href="#" class="text-decoration-none fw-semibold">Sheakh Imran</a></small>
     </footer>
 
-    <script>
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute("data-theme");
-            const targetTheme = currentTheme === "dark" ? "light" : "dark";
-            document.documentElement.setAttribute("data-theme", targetTheme);
-            localStorage.setItem("theme", targetTheme);
-            document.getElementById("theme-icon").className = targetTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
-        }
-        (function () {
-            const savedTheme = localStorage.getItem("theme") || "light";
-            document.documentElement.setAttribute("data-theme", savedTheme);
-            document.getElementById("theme-icon").className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
-        })();
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

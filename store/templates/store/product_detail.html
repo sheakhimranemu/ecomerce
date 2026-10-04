@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }} | Tech Kutir</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f4f9ff; color: #0f172a; font-family: 'Segoe UI', sans-serif; }
+        .product-img-large { width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; background: #fff; padding: 15px; }
+        .whatsapp-btn { background-color: #25D366; color: white; font-weight: bold; }
+        .whatsapp-btn:hover { background-color: #1da851; color: white; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-white shadow-sm py-3 mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="/"><i class="fas fa-microchip"></i> Tech Kutir</a>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <a href="/" class="btn btn-outline-secondary mb-4"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                    <h5 class="alert-heading fw-bold"><i class="fas fa-check-circle"></i> ধন্যবাদ!</h5>
+                    <p class="mb-0">{{ message }}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row g-4 bg-white p-4 rounded-3 shadow-sm">
+            <div class="col-md-6 text-center border-end">
+                <img src="{{ product.image_url }}" class="product-img-large mb-3" alt="{{ product.title }}">
+                <h3 class="text-primary fw-bold">৳{{ product.price }}</h3>
+                {% if product.discount_price %}
+                    <span class="text-muted text-decoration-line-through">৳{{ product.discount_price }}</span>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <span class="badge bg-primary mb-2">{{ product.category.name }}</span>
+                <h2 class="fw-bold mb-3">{{ product.title }}</h2>
+                <p class="text-secondary mb-4">{{ product.description|default:"No detailed description provided." }}</p>
+                
+                <hr class="my-4">
+                <div class="card bg-light border-0 p-3 mb-4">
+                    <h5 class="fw-bold text-dark mb-3"><i class="fas fa-truck text-primary"></i> Cash on Delivery Order</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">আপনার নাম</label>
+                            <input type="text" name="name" class="form-control" required placeholder="আপনার পূর্ণ নাম">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">মোবাইল নম্বর</label>
+                            <input type="text" name="phone" class="form-control" required placeholder="017xxxxxxxx">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">ডেলিভারি ঠিকানা</label>
+                            <textarea name="address" class="form-control" rows="2" required placeholder="জেলা, থানা ও বিস্তারিত ঠিকানা"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">পরিমাণ (Quantity)</label>
+                            <input type="number" name="quantity" class="form-control" value="1" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold fs-5 shadow-sm"><i class="fas fa-shopping-bag"></i> Confirm Order</button>
+                    </form>
+                </div>
+
+                <div class="d-grid">
+                    <a href="https://wa.me/8801700000000?text=I%20have%20a%20question%20about%20{{ product.title }}" target="_blank" class="btn whatsapp-btn py-2">
+                        <i class="fab fa-whatsapp me-2"></i> Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 bg-white border-top mt-5">
+        <p class="mb-0 text-muted">&copy; 2026 <strong>Tech Kutir</strong>. All Rights Reserved.</p>
+        <small class="text-muted">Designed & Developed by <a href="#" class="text-decoration-none fw-semibold">Sheakh Imran</a></small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
