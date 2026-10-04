@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Kutir | Smart Shopping, Smart Life</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f4f9ff;
+            --bg-secondary: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --accent-blue: #00a8ff;
+            --accent-glow: transparent;
+            --border-color: #e2e8f0;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0a0f1d;
+            --bg-secondary: #131b2e;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-glow: 0 0 12px rgba(56, 189, 248, 0.6);
+            --border-color: #1e293b;
+        }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .highlight-text {
+            color: var(--accent-blue) !important;
+            text-shadow: var(--accent-glow);
+            font-weight: 700;
+        }
+        .hero-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .badge-offer {
+            background-color: #ff5722;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Info Bar -->
+    <div class="py-2 text-center text-white" style="background-color: #00a8ff;">
+        <small><i class="fas fa-phone-alt"></i> +8801787-808006 &nbsp;|&nbsp; <i class="fab fa-whatsapp"></i> WhatsApp Support</small>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-custom py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold text-center mx-auto" href="#">
+                <h3 class="m-0 highlight-text"><i class="fas fa-microchip"></i> Tech Kutir</h3>
+                <small class="text-muted fs-6">Smart Shopping, Smart Life</small>
+            </a>
+            <button class="btn btn-outline-info rounded-circle ms-2" id="theme-toggle" onclick="toggleTheme()">
+                <i id="theme-icon" class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container hero-section">
+        <span class="badge badge-offer mb-3"><i class="fas fa-fire"></i> Best Deals For You - 50% OFF</span>
+        <h1 class="display-4 fw-bold mt-2">Everything You Need, <br><span class="highlight-text">All In One Place.</span></h1>
+        <p class="lead text-secondary mt-3">Discover premium gadgets, electronics, gaming accessories, home essentials and quality products.</p>
+        <div class="mt-4">
+            <button class="btn btn-info text-white btn-lg me-2 px-4">Shop Now</button>
+            <button class="btn btn-outline-info btn-lg px-4">View Collection</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 <strong>Tech Kutir</strong>. All Rights Reserved.</p>
+            <p class="mb-0 text-secondary">
+                Designed & Developed by <a href="#" class="highlight-text text-decoration-none">Sheakh Imran</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const targetTheme = currentTheme === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", targetTheme);
+            localStorage.setItem("theme", targetTheme);
+            document.getElementById("theme-icon").className = targetTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+        }
+        (function () {
+            const savedTheme = localStorage.getItem("theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+            document.getElementById("theme-icon").className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+        })();
+    </script>
+</body>
+</html>
